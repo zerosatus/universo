@@ -1,0 +1,445 @@
+:root {
+  --primary: #6366F1;
+  --primary-soft: #818CF8;
+  --primary-bg: rgba(99, 102, 241, 0.12);
+  --on-primary: #FFFFFF;
+  --surface: #0F172A;
+  --card: #1E293B;
+  --card-hover: #263449;
+  --on-surface: #E2E8F0;
+  --on-surface-dim: rgba(226, 232, 240, 0.6);
+  --divider: rgba(148, 163, 184, 0.2);
+  --success: #10B981;
+  --warn: #F59E0B;
+  --danger: #EF4444;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --gap: 12px;
+  --pad: 14px;
+}
+
+/* ── RESET ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;        /* nunca deixa o conteúdo "vazar" para os lados */
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--surface);
+  color: var(--on-surface);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ══════════════════════════════════════════
+   TOPBAR
+   ══════════════════════════════════════════ */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px var(--pad);
+  background: linear-gradient(135deg, rgba(99,102,241,0.15), transparent);
+  border-bottom: 1px solid var(--divider);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;             /* permite que o texto encolha em vez de rebentar */
+  flex: 1;
+}
+
+.brand-icon {
+  font-size: 22px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--primary), var(--primary-soft));
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+
+.brand div { min-width: 0; }
+
+.topbar h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitle {
+  font-size: 0.68rem;
+  color: var(--on-surface-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chip {
+  padding: 5px 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-bg);
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   PESQUISA
+   ══════════════════════════════════════════ */
+.search-section {
+  padding: var(--pad) var(--pad) 6px;
+}
+
+.search-wrapper {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 12px 42px 12px 40px;
+  font-size: 1rem;          /* >= 16px evita zoom automático no iOS */
+  font-family: inherit;
+  color: var(--on-surface);
+  background: var(--card);
+  border: 1.5px solid var(--divider);
+  border-radius: 28px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#searchInput::placeholder { color: var(--on-surface-dim); }
+
+#searchInput:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-bg);
+}
+
+.clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  display: none;
+  place-items: center;
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+.clear-btn.visible { display: grid; }
+
+/* ══════════════════════════════════════════
+   CATEGORIAS (scroll horizontal no celular)
+   ══════════════════════════════════════════ */
+.categories {
+  display: flex;
+  gap: 8px;
+  padding: 10px var(--pad);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.categories::-webkit-scrollbar { display: none; }
+
+.cat-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--on-surface-dim);
+  background: var(--card);
+  border: 1.5px solid var(--divider);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  scroll-snap-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cat-btn:hover {
+  color: var(--on-surface);
+  border-color: var(--primary-soft);
+}
+
+.cat-btn.active {
+  color: var(--on-primary);
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+}
+
+/* ══════════════════════════════════════════
+   GRID — 1 coluna no celular
+   ══════════════════════════════════════════ */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;   /* celular: 1 coluna */
+  gap: var(--gap);
+  padding: var(--pad) var(--pad) 32px;
+  max-width: 1120px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════
+   CARD
+   ══════════════════════════════════════════ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius);
+  padding: 14px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  min-width: 0;                /* evita overflow por causa de fórmulas longas */
+  overflow: hidden;
+  width: 100%;
+}
+
+.card:hover {
+  border-color: var(--primary-soft);
+  box-shadow: var(--shadow);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.card-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--on-surface);
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.cat-tag {
+  font-size: 0.62rem;
+  padding: 3px 7px;
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.latex-box {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-sm);
+  padding: 12px 8px;
+  margin: 8px 0;
+  text-align: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  font-size: 1rem;
+  color: var(--on-surface);
+  scrollbar-width: thin;
+}
+
+/* MathJax: garante que a fórmula nunca "rebenta" o card */
+.latex-box mjx-container,
+.latex-box .MathJax {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.description {
+  font-size: 0.78rem;
+  color: var(--on-surface-dim);
+  margin-bottom: 10px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.variables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.var {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.68rem;
+  padding: 4px 8px;
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-radius: 8px;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.var strong { font-weight: 700; }
+.var span { color: var(--on-surface-dim); }
+
+/* ══════════════════════════════════════════
+   EMPTY STATE
+   ══════════════════════════════════════════ */
+.empty-state {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--on-surface-dim);
+}
+.empty-icon { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.5; }
+.empty-state h2 { font-size: 1rem; margin-bottom: 6px; color: var(--on-surface); }
+.empty-state p { font-size: 0.8rem; }
+
+/* ══════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════ */
+footer {
+  text-align: center;
+  padding: 20px var(--pad);
+  font-size: 0.72rem;
+  color: var(--on-surface-dim);
+  border-top: 1px solid var(--divider);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVO
+   ══════════════════════════════════════════ */
+
+/* Celular grande / tablet pequeno */
+@media (min-width: 480px) {
+  :root { --gap: 14px; --pad: 16px; }
+  .topbar h1 { font-size: 1.05rem; }
+  .card { padding: 16px; }
+}
+
+/* Tablet — 2 colunas */
+@media (min-width: 640px) {
+  :root { --gap: 16px; --pad: 20px; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .topbar h1 { font-size: 1.2rem; }
+  .subtitle { font-size: 0.72rem; }
+  .card-title { font-size: 0.95rem; }
+  .latex-box { font-size: 1.05rem; }
+}
+
+/* Desktop — 3 colunas */
+@media (min-width: 1024px) {
+  :root { --gap: 18px; --pad: 24px; }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 16px var(--pad) 56px;
+  }
+  .topbar { padding: 16px 32px; }
+  .topbar h1 { font-size: 1.3rem; }
+  .search-section { padding: 20px 32px 8px; }
+  .categories { padding: 12px 32px; }
+  .card:hover { transform: translateY(-3px); }
+}
+
+/* Desktop grande — 4 colunas */
+@media (min-width: 1400px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ══════════════════════════════════════════
+   AJUSTES FINOS PARA CELULARES PEQUENOS
+   ══════════════════════════════════════════ */
+@media (max-width: 360px) {
+  :root { --pad: 10px; --gap: 10px; }
+  .topbar { padding: 10px var(--pad); }
+  .brand-icon { width: 34px; height: 34px; font-size: 20px; }
+  .topbar h1 { font-size: 0.9rem; }
+  .subtitle { display: none; }     /* esconde o subtítulo em ecrãs minúsculos */
+  .chip { font-size: 0.62rem; padding: 4px 8px; }
+  .cat-btn { padding: 8px 12px; font-size: 0.74rem; }
+  .card { padding: 12px; border-radius: 12px; }
+  .card-title { font-size: 0.85rem; }
+  .latex-box { padding: 10px 6px; font-size: 0.92rem; }
+  .description { font-size: 0.74rem; }
+  .var { font-size: 0.64rem; padding: 3px 6px; }
+}
+
+/* ══════════════════════════════════════════
+   ACESSIBILIDADE / PREFERÊNCIAS
+   ══════════════════════════════════════════ */
+
+/* Utilizadores que preferem menos animação */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Modo claro do sistema (opcional — remove se só queres dark) */
+/*
+@media (prefers-color-scheme: light) {
+  :root {
+    --surface: #F8FAFC;
+    --card: #FFFFFF;
+    --on-surface: #0F172A;
+    --on-surface-dim: #475569;
+    --divider: rgba(15, 23, 42, 0.12);
+  }
+}
+*/
+
+/* Safe area do iPhone (notch) */
+@supports (padding: max(0px)) {
+  .topbar {
+    padding-left: max(var(--pad), env(safe-area-inset-left));
+    padding-right: max(var(--pad), env(safe-area-inset-right));
+  }
+  footer {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
